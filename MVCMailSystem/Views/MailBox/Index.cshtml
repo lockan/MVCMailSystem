@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MVCMailSystem.Models.MailBox>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>MailBoxes</h2>
+
+<p />This shows the GUID links between a messageID and an employee ID. Each GUID pair represents a single message instance.
+<br />To view a specific user mailbox you would have to filter this list by a given EmployeeID (GUID) from the employee table to show only their messages.
+
+<p>Known Bug: Entity Framework doesn't seem to liek to display objects that use composite keys. This page will look like there's only one mailID. 
+<br/>However, doing an sql query against the database will show that it's actualyl composite key guid pairs for each entry. (All rows unique.) 
+<br/> This is to be resolved by adding a "MailDisplay" object that will require an SQL table join to provide all relevant information to the user. 
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MailBoxID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mailID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateRcvd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateRead)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MailBoxID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mailID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateRcvd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateRead)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.MailBoxID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MailBoxID })
+        </td>
+    </tr>
+}
+
+</table>

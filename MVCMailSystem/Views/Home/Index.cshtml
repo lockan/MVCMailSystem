@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>MVC Mail System</h1>
+</div>
+
+<div>
+    <p>
+        Mail System prototype application. See navigation at top. 
+        <ul>
+            <li>Mail - This is where you can create and view mail messages. </li>
+            <li>MailBoxes - Shows all the Guid binidngs between specific messages and their recipients. </li>
+            <li>Employees - a sample user database. EmployeeIDs (Guids) are required for the mail system to work. </li>
+        </ul>
+
+    </p>
+</div>  
+
+<div>
+    <ul>
+        <li>@Html.ActionLink("Mail Messages", "Index", "Mail")</li>
+    </ul>
+</div>  

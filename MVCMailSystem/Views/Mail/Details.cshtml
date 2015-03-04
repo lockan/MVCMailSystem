@@ -1,0 +1,41 @@
+﻿@model MVCMailSystem.Models.Mail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mail</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateSent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateSent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.senderID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.senderID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MVCMailSystem.Models.Mail>
+
+@{
+    ViewBag.Title = "Mail Messages";
+}
+
+<h2>Mail</h2>
+<p/>This is a list of all messages sent. You can create a new message from here, but you'll need a sender GUID from the employees page. 
+<br/> You can delete messages from here, but this will not delete them from the Mailbox table. Delete ability for this table will be removed from the final version. 
+<br/> Individual users will be able to delete specific user-message instances from the mailbox table, but the mail table always stores all messages sent. 
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MailID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateSent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.senderID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MailID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateSent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.senderID)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.MailID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MailID })
+        </td>
+    </tr>
+}
+
+</table>
