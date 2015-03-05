@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MVCMailSystem.Models.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>MailSystem - Login</h2>
+
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <table>
+        <tr>
+            <td>
+                <b>Login: </b>
+            </td>
+            <td>
+                @Html.TextBox("username")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Password:</b>
+            </td>
+            <td>
+                @Html.Password("pword")
+                <i> Leave password blank for now.</i>
+            </td>
+        </tr>
+    </table>
+
+    <p />
+
+    <button type="submit">Login</button>
+    <p><i>@ViewBag.errorMessage</i></p>
+}
