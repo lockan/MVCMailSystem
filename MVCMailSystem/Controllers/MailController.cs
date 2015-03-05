@@ -48,6 +48,11 @@ namespace MVCMailSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail)
         {
+            //Wonho to set list of recipient GUIDS in a TempData[].
+            //Need to retrieve that list and generate an Employee List here. 
+            //TEMP: Currently sending to all employees. 
+            List<Employee> recipients = db.empDB.ToList();
+            
             //Set timestamp on message. 
             DateTime timesent = new DateTime(); timesent = DateTime.Now;
             mail.dateSent = timesent;
@@ -59,15 +64,11 @@ namespace MVCMailSystem.Controllers
                 db.mailDB.Add(mail);
                 db.SaveChanges();
                 
-                //TEMP - Create list of all users - TESTING ONLY
-                //TODO: Need to pass in a list of only the users we want to send the message to. 
-                List<Employee> mailboxlist = new List<Employee>();
-                mailboxlist = db.empDB.ToList();
                 //END TEMP
                 
                 //add message links to MailBox table for all users in list. 
                 
-                foreach (Employee emp in mailboxlist)
+                foreach (Employee emp in recipients)
                 {
                     MailBox mailbox = new MailBox();
                     mailbox.mailID = mail.MailID;   //Only need to set the mailID once. 
