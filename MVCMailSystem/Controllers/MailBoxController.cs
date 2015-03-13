@@ -21,6 +21,8 @@ namespace MVCMailSystem.Controllers
                 + " JOIN Mails ON MailBoxes.mailID = Mails.MailID "
                 + " JOIN Employees ON Mails.senderID = Employees.EmployeeID";
 
+            //TODO: Fix the duplicate data issue. Need to add an id column to the mailboxes table and use it as the primary key, 
+            // but keep the foreign composite keys. Then remap all the values in the view. Should resole the issue. 
             List<MailBox> mailboxlist = db.mailboxDB.ToList();
             
             return View(mailboxlist);
