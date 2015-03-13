@@ -17,12 +17,12 @@ namespace MVCMailSystem.Controllers
         // GET: /MailBox/
         public ActionResult Index()
         {
+            /*
             String joinstring = "SELECT  Employees.username, Mails.text, Mails.dateSent, MailBoxes.dateRcvd, MailBoxes.dateRead FROM MailBoxes"
                 + " JOIN Mails ON MailBoxes.mailID = Mails.MailID "
                 + " JOIN Employees ON Mails.senderID = Employees.EmployeeID";
+            */
 
-            //TODO: Fix the duplicate data issue. Need to add an id column to the mailboxes table and use it as the primary key, 
-            // but keep the foreign composite keys. Then remap all the values in the view. Should resole the issue. 
             List<MailBox> mailboxlist = db.mailboxDB.ToList();
             
             return View(mailboxlist);

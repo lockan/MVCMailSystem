@@ -169,9 +169,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502200035149_init.cs" />
-    <Compile Include="Migrations\201502200035149_init.Designer.cs">
-      <DependentUpon>201502200035149_init.cs</DependentUpon>
+    <Compile Include="Migrations\201503132319201_drop_mailboxes.cs" />
+    <Compile Include="Migrations\201503132319201_drop_mailboxes.Designer.cs">
+      <DependentUpon>201503132319201_drop_mailboxes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503132346324_mailboxID_to_GUID.cs" />
+    <Compile Include="Migrations\201503132346324_mailboxID_to_GUID.Designer.cs">
+      <DependentUpon>201503132346324_mailboxID_to_GUID.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -241,8 +245,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502200035149_init.resx">
-      <DependentUpon>201502200035149_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503132319201_drop_mailboxes.resx">
+      <DependentUpon>201503132319201_drop_mailboxes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503132346324_mailboxID_to_GUID.resx">
+      <DependentUpon>201503132346324_mailboxID_to_GUID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
