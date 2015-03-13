@@ -17,9 +17,11 @@ namespace MVCMailSystem.Controllers
         // GET: /MailBox/
         public ActionResult Index()
         {
+            /*
             String joinstring = "SELECT  Employees.username, Mails.text, Mails.dateSent, MailBoxes.dateRcvd, MailBoxes.dateRead FROM MailBoxes"
                 + " JOIN Mails ON MailBoxes.mailID = Mails.MailID "
                 + " JOIN Employees ON Mails.senderID = Employees.EmployeeID";
+            */
 
             List<MailBox> mailboxlist = db.mailboxDB.ToList();
             
