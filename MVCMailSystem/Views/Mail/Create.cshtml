@@ -2,10 +2,14 @@
 
 @{
     ViewBag.Title = "Create";
+    ViewBag.username = this.Session["username"];
+    ViewBag.uid = this.Session["empID"];
+    
 }
 
 <h2>Create</h2>
 
+<p>Mail From: @ViewBag.username @ViewBag.uid</p>
 
 @using (Html.BeginForm()) 
 {
@@ -19,9 +23,9 @@
         <p> Note: senderID is a temp field for now. You can view the Employees list to copy/paste a valid employee GUID for testing. 
         <br />Once integrated this would be the passed Guid of the logged in manager, stored in a hidden field. </p>
         <div class="form-group">
-            @Html.LabelFor(model => model.senderID, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.senderID, new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.senderID, null, "senderID")
+                @Html.EditorFor(model => model.senderID, null, "senderID", new { @value = this.Session["username"], @enabled = false })
                 @Html.ValidationMessageFor(model => model.senderID)
             </div>
         </div>
