@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - MVC Mail System</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jstree")
 
 </head>
 <body>
@@ -28,8 +30,6 @@
             <p>&copy; @DateTime.Now.Year - MVC Mail System - A. Lockhart</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
