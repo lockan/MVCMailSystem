@@ -1,0 +1,145 @@
+﻿@model IEnumerable<Iteration1.Models.Employee>
+
+@{
+    ViewBag.Title = "Organization Structure";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="tree">
+    <ul>
+        @foreach (var item in Model)
+        {
+            if (item.StaffType == "Department Manager")
+            {
+                <li id=@item.ID>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    <ul>
+                        @foreach (var t in Model)
+                        {
+                            if (t.StaffType == "Team Manager")
+                            {
+                                <li id=@t.EmployedID>
+                                    @Html.DisplayFor(modelItem => t.Name)
+                                    <ul>
+                                        @foreach (var s in Model)
+                                        {
+                                            if (t.EmployedID == s.MgrID)
+                                            {
+                                                <li id=@s.EmployedID>
+                                                    @Html.DisplayFor(modelItem => s.Name)
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+            }
+        }
+    </ul>
+</div>
+<script>
+    $(function () {
+        $("#tree").jstree(
+            {
+                "checkbox": {
+                    "three_state": false
+                },
+                "plugins": ["checkbox"]
+            }
+      )
+    });
+
+    //  Displays selected node information - id and text from the tree.
+    //  Notice that multiple nodes may have same text, but the id is nunique
+    function display_selected_node() {
+        var selectedNodeIds = [];
+        var selectedNodeTexts = [];
+
+        // slectedNodes is an array that stores selected nodes from the tree
+        var selectedNodes = $('#tree').jstree("get_selected", true);
+
+        $.each(selectedNodes, function () {
+            // stores ids of selected nodes
+            selectedNodeIds.push(this.id);
+
+            // stores texts of selected nodes
+            selectedNodeTexts.push(this.text);
+        });
+
+        // displays ids of the selected nodes
+        document.getElementById('result_ids').innerHTML = selectedNodeIds.join(", ");
+
+        // displays texts of the selected nodes
+        document.getElementById('result_texts').innerHTML = selectedNodeTexts.join(", ");
+
+
+        @*
+            Other than such 'j1_1' and 'j1_2' IDs, which JSTree genarates, the ids
+            should be meaningful to retreive data from the database. Therefore, to
+            refine the ids is neccssary, and it should be done within the server-side
+            to be more secure.
+
+            The following line passes to the JSTree version of selected node ids to
+            the value of 'selected_ids' that is used to send data to the server by
+            using form (POST) below.
+        *@
+        document.getElementById('selected_ids').value = $('#tree').jstree("get_selected");
+
+    }
+</script>
+
+<!-- button that fires display_selected_node function above on click -->
+<button onclick="display_selected_node()">See Tree Data from Client</button>
+
+<br />
+<br />
+<br />
+
+@*The results generated at client side displayed here.*@
+Selected Node IDs:
+<div id="result_ids"></div>
+
+<br />
+<br />
+
+Selected Node Texts:
+<div id="result_texts"></div>
+
+<br />
+<br />
+<br />
+
+<pre>
+    Other than such 'j1_1' and 'j1_2' IDs, which JSTree genarates, the ids 
+    should be meaningful to retreive data from the database. Therefore, to 
+    refine the ids is neccssary, and it should be done within the server-side 
+    to be more secure.
+    The following procedures pass JStree version of selected node ids stored
+    in the value of input 'selected_ids' from the script above in order to send
+    data to the server by using form (POST).
+</pre>
+@using (Html.BeginForm("Index", "Employee", FormMethod.Post,
+                                      new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+        @*
+            hidden input type. the data is retrieved from the script above.
+                - JStree version of selected node ids
+        *@
+        <input id="selected_ids" name="employees" type="hidden" />
+        <input type="submit" value="Send To Server" onclick="display_selected_node()" />
+    </fieldset>
+}
+
+@*
+    The refined version of selected node ids that are retieved from the server
+    display at here.
+*@
+<h2>Refined Version of Selected Node IDs from the Server:</h2>
+<h3>@ViewBag.SelectedEmployees</h3>
