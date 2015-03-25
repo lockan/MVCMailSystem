@@ -2,19 +2,20 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using Iteration1.DBContexts;
-using Iteration1.Models;
+using MVCMailSystem.Models;
 
-namespace Iteration1.Controllers
+namespace MVCMailSystem.Controllers
 {
-    public class EmployeeController : Controller
+    public class TreeViewController : Controller
     {
-        private EmployeeContext db = new EmployeeContext();
+        private MailSystemDBContext db = new MailSystemDBContext();
+        //private EmployeeContext db = new EmployeeContext();
 
         // GET: Employee
         public ActionResult Index()
         {
-            return View(db.Employees.ToList());
+            //return View(db.Employees.ToList());
+            return View(db.empDB.ToList());
         }
 
         [HttpPost]
@@ -22,7 +23,7 @@ namespace Iteration1.Controllers
         {
             ViewBag.SelectedEmployees = employees;
 
-            return View(db.Employees.ToList());
+            return View(db.empDB.ToList());
         }
     }
 }

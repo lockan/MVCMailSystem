@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Iteration1.Models.Employee>
+﻿@model IEnumerable<MVCMailSystem.Models.Employee>
 
 @{
     ViewBag.Title = "Organization Structure";
@@ -10,24 +10,24 @@
     <ul>
         @foreach (var item in Model)
         {
-            if (item.StaffType == "Department Manager")
+            if (item.stafftype == "Admin")
             {
-                <li id=@item.ID>
-                    @Html.DisplayFor(modelItem => item.Name)
+                <li id=@item.EmployeeID>
+                    @Html.DisplayFor(modelItem => item.firstname)
                     <ul>
                         @foreach (var t in Model)
                         {
-                            if (t.StaffType == "Team Manager")
+                            if (t.stafftype == "Manager")
                             {
-                                <li id=@t.EmployedID>
-                                    @Html.DisplayFor(modelItem => t.Name)
+                                <li id=@t.EmployeeID>
+                                    @Html.DisplayFor(modelItem => t.firstname)
                                     <ul>
                                         @foreach (var s in Model)
                                         {
-                                            if (t.EmployedID == s.MgrID)
+                                            if (t.EmployeeID == s.mgrID)
                                             {
-                                                <li id=@s.EmployedID>
-                                                    @Html.DisplayFor(modelItem => s.Name)
+                                                <li id=@s.EmployeeID>
+                                                    @Html.DisplayFor(modelItem => s.firstname)
                                                 </li>
                                             }
                                         }
