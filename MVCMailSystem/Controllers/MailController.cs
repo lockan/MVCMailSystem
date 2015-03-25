@@ -36,9 +36,12 @@ namespace MVCMailSystem.Controllers
         }
 
         // GET: /Mail/Create
-        public ActionResult Create()
+        public ActionResult Create(Guid sender_id)
         {
-            return View();
+            Mail m = new Mail();
+            m.senderID = sender_id;
+            
+            return View(m);
         }
 
         // POST: /Mail/Create
@@ -46,12 +49,12 @@ namespace MVCMailSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail)
+        public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail, List<Employee> recipients)
         {
             //Wonho to set list of recipient GUIDS in a TempData[].
             //Need to retrieve that list and generate an Employee List here. 
             //TEMP: Currently sending to all employees. 
-            List<Employee> recipients = db.empDB.ToList();
+            recipients = db.empDB.ToList();
             
             //Set timestamp on message. 
             DateTime timesent = new DateTime(); timesent = DateTime.Now;

@@ -25,7 +25,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.senderID, new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.senderID, null, "senderID", new { @value = this.Session["username"], @enabled = false })
+                @Html.EditorFor(model => model.senderID, null, "senderID")        
                 @Html.ValidationMessageFor(model => model.senderID)
             </div>
         </div>
