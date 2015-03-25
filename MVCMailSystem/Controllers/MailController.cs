@@ -71,8 +71,9 @@ namespace MVCMailSystem.Controllers
                 foreach (Employee emp in recipients)
                 {
                     MailBox mailbox = new MailBox();
+                    mailbox.MailBoxID = Guid.NewGuid();
                     mailbox.mailID = mail.MailID;   //Only need to set the mailID once. 
-                    mailbox.MailBoxID = emp.EmployeeID;
+                    mailbox.empID = emp.EmployeeID;
                     mailbox.dateRcvd = null;
                     mailbox.dateRead = null;
                     db.mailboxDB.Add(mailbox);

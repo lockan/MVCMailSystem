@@ -18,6 +18,8 @@ namespace MVCMailSystem.Controllers
         public ActionResult Index()
         {
             if (TempData["errorMessage"] != null) @ViewBag.errorMessage = TempData["errorMessage"].ToString();
+            //SeleniumDriver selenium = new SeleniumDriver();
+            //selenium.LoginTest();
             return View();
         }
 
