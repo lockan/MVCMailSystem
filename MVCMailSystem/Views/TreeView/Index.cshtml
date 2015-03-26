@@ -10,14 +10,14 @@
     <ul>
         @foreach (var item in Model)
         {
-            if (item.stafftype == "Admin")
+            if (item.stafftype == "admin1")
             {
                 <li id=@item.EmployeeID>
                     @Html.DisplayFor(modelItem => item.firstname)
                     <ul>
                         @foreach (var t in Model)
                         {
-                            if (t.stafftype == "Manager")
+                            if (t.stafftype == "manager")
                             {
                                 <li id=@t.EmployeeID>
                                     @Html.DisplayFor(modelItem => t.firstname)
@@ -78,14 +78,7 @@
 
 
         @*
-            Other than such 'j1_1' and 'j1_2' IDs, which JSTree genarates, the ids
-            should be meaningful to retreive data from the database. Therefore, to
-            refine the ids is neccssary, and it should be done within the server-side
-            to be more secure.
-
-            The following line passes to the JSTree version of selected node ids to
-            the value of 'selected_ids' that is used to send data to the server by
-            using form (POST) below.
+            passes selected ids to the controller
         *@
         document.getElementById('selected_ids').value = $('#tree').jstree("get_selected");
 
@@ -113,15 +106,6 @@ Selected Node Texts:
 <br />
 <br />
 
-<pre>
-    Other than such 'j1_1' and 'j1_2' IDs, which JSTree genarates, the ids 
-    should be meaningful to retreive data from the database. Therefore, to 
-    refine the ids is neccssary, and it should be done within the server-side 
-    to be more secure.
-    The following procedures pass JStree version of selected node ids stored
-    in the value of input 'selected_ids' from the script above in order to send
-    data to the server by using form (POST).
-</pre>
 @using (Html.BeginForm("Index", "Employee", FormMethod.Post,
                                       new { enctype = "multipart/form-data" }))
 {
