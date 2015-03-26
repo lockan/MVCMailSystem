@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - MVC Mail System</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/default/style.css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jstree")
@@ -15,7 +16,7 @@
         <div class="container">
             <div class="navbar-header">
                 @Html.ActionLink("Login", "Index", "Login", null, new { @class = "navbar-brand" })
-                @Html.ActionLink("TreeView", "Index", "TreeView", null, new  { @class="navbar-brand"})
+                @Html.ActionLink("TreeView", "Index", "TreeView", null, new { @class = "navbar-brand" })
                 @Html.ActionLink("MVC Mail System", "Index", "Home", null, new { @class = "navbar-brand" })
                 @Html.ActionLink("Mail", "Index", "Mail", null, new { @class = "navbar-brand" })
                 @Html.ActionLink("MailBoxes", "Index", "MailBox", null, new { @class = "navbar-brand" })
