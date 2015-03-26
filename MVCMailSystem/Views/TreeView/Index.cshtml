@@ -10,7 +10,7 @@
     <ul>
         @foreach (var item in Model)
         {
-            if (item.stafftype == "admin1")
+            if (item.stafftype == "admin")
             {
                 <li id=@item.EmployeeID>
                     @Html.DisplayFor(modelItem => item.firstname)
