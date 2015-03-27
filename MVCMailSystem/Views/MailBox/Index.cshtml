@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+
+    var grid = new System.Web.Helpers.WebGrid(source: Model, rowsPerPage: 10);
 }
 
 <h2>MailBoxes</h2>
@@ -15,7 +17,7 @@
 
 
 <table class="table">
-    <tr>
+    @*<tr>
         <th>
             @Html.DisplayNameFor(model => model.empID)
         </th>
@@ -49,7 +51,27 @@
             @Html.ActionLink("Details", "Details", new { id=item.MailBoxID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.MailBoxID })
         </td>
-    </tr>
-}
+    </tr>*@
+
+    @grid.GetHtml(
+        tableStyle: "gridTable",
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+                    grid.Column("empID"),
+                    grid.Column("mailID"),
+                    grid.Column("dateRcvd"),
+                    grid.Column("dateRead"),
+                    grid.Column(
+                        header: "",
+                        style: "text-align-center",
+                        format: item => new HtmlString(
+                            Html.ActionLink("Edit", "Edit", new { ID = item.empID }).ToString() + " | " +
+                            Html.ActionLink("Details", "Details", new { ID = item.empID }).ToString() + " | " +
+                            Html.ActionLink("Delete", "Delete", new { ID = item.empID }).ToString()
+                    )
+                )
+        )
+    )
 
 </table>
