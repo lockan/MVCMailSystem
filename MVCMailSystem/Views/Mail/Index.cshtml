@@ -2,52 +2,85 @@
 
 @{
     ViewBag.Title = "Mail Messages";
+
+    var grid = new System.Web.Helpers.WebGrid(source: Model, rowsPerPage: 10);
 }
 
-<h2>Mail</h2>
-<p/>This is a list of all messages sent. You can create a new message from here, but you'll need a sender GUID from the employees page. 
-<br/> You can delete messages from here, but this will not delete them from the Mailbox table. Delete ability for this table will be removed from the final version. 
-<br/> Individual users will be able to delete specific user-message instances from the mailbox table, but the mail table always stores all messages sent. 
+@*<h2>Mail</h2>
+    <p/>This is a list of all messages sent. You can create a new message from here, but you'll need a sender GUID from the employees page.
+    <br/> You can delete messages from here, but this will not delete them from the Mailbox table. Delete ability for this table will be removed from the final version.
+    <br/> Individual users will be able to delete specific user-message instances from the mailbox table, but the mail table always stores all messages sent.*@
 
 <p>
     @Html.ActionLink("Create New", "Create", new { sender_id = this.Session["empID"] })
 </p>
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MailID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateSent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.senderID)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MailID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateSent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.senderID)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id=item.MailID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.MailID })
+            </td>
+        </tr>*@
+
+@*<table>
+        @WebGrid.GetHtml(
+        tableStyle: "gridTable",
+        columns:
+                grid.Column("text", "col1")
+        )
+
+
+    </table>*@
+
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MailID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.dateSent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.senderID)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MailID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.text)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dateSent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.senderID)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.MailID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MailID })
-        </td>
-    </tr>
-}
-
+    @grid.GetHtml(
+        tableStyle: "gridTable",
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+            grid.Column("MailID"),
+            grid.Column("text"),
+            grid.Column("dateSent"),
+            grid.Column("senderID"),
+            grid.Column(
+                header: "",
+                style: "text-align-center",
+                format: item => new HtmlString(
+                    Html.ActionLink("Edit", "Edit", new { ID = item.MailID }).ToString() + " | " +
+                    Html.ActionLink("Details", "Details", new { ID = item.MailID }).ToString() + " | " +
+                    Html.ActionLink("Delete", "Delete", new { ID = item.MailID }).ToString()
+                )
+            )
+        )
+    )
 </table>

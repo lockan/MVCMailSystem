@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Employees";
+
+    var grid = new System.Web.Helpers.WebGrid(source: Model, rowsPerPage: 10);
 }
 
 <h2>Index</h2>
@@ -14,7 +16,7 @@ To test sending a message you'll need a Guid for the sender. You can copy one fr
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
+    @*<tr>
         <th>
             @Html.DisplayNameFor(model => model.EmployeeID)
         </th>
@@ -61,7 +63,28 @@ To test sending a message you'll need a Guid for the sender. You can copy one fr
             @Html.ActionLink("Details", "Details", new { id=item.EmployeeID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeID })
         </td>
-    </tr>
-}
+    </tr>*@
 
+    @grid.GetHtml(
+        tableStyle: "gridTable",
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+                grid.Column("EmployeeID"),    
+                grid.Column("username"),
+                grid.Column("stafftype"),
+                grid.Column("firstname"),
+                grid.Column("lastname"),
+                grid.Column("mgrID"),
+                grid.Column(
+                    header: "",
+                    style: "text-align-center",
+                    format: item => new HtmlString(
+                                Html.ActionLink("Edit", "Edit", new { ID = item.EmployeeID }).ToString() + " | " +
+                                Html.ActionLink("Details", "Details", new { ID = item.EmployeeID }).ToString() + " | " +
+                                Html.ActionLink("Delete", "Delete", new { ID = item.EmployeeID }).ToString()
+                    )
+                )
+        )
+    )
 </table>

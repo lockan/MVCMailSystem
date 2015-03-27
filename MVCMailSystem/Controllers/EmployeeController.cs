@@ -17,7 +17,8 @@ namespace MVCMailSystem.Controllers
         // GET: /Employee/
         public ActionResult Index()
         {
-            return View(db.empDB.ToList());
+            List<Employee> empList = db.empDB.ToList();
+            return View(empList);
         }
 
         // GET: /Employee/Details/5
