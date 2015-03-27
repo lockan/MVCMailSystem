@@ -21,9 +21,9 @@ namespace MVCMailSystem.Controllers
         [HttpPost]
         public ActionResult Index(string employees)
         {
-            ViewBag.SelectedEmployees = employees;
+            TempData["recipients"] = employees;
 
-            return View(db.empDB.ToList());
+            return RedirectToAction("Create", "Mail", new { sender_id = this.Session["empID"] });
         }
     }
 }

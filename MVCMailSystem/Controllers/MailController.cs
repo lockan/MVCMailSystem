@@ -52,13 +52,20 @@ namespace MVCMailSystem.Controllers
         public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail)
         {
             //Wonho to set list of recipient GUIDS in a TempData[].
-            //Need to retrieve that list and generate an Employee List here. 
-            //TEMP: Currently sending to all employees.
-            List<Employee> recipients = db.empDB.ToList();
-            
-            //TEST TEST TEST
-            string gotem = ViewBag.SelectedEmployees;
-                        
+
+            //Retrieve that list and generate an Employee List here.     
+            string ids = TempData["recipients"].ToString();
+            string[] ids_parsed = ids.Split(',');
+            string ids_formatted = "";
+            foreach (string idstr in ids_parsed) {
+                ids_formatted += "'" + idstr +  "', ";
+            }
+            ids_formatted = ids_formatted.Substring(0, ids_formatted.Length - 2);
+
+            List<Employee> recipients = 
+                db.empDB.SqlQuery("SELECT * FROM employees "
+                    + "WHERE EmployeeID IN ( " + ids_formatted + " )").ToList();
+       
             //Set timestamp on message. 
             DateTime timesent = new DateTime(); timesent = DateTime.Now;
             mail.dateSent = timesent;
