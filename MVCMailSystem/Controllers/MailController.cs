@@ -49,13 +49,16 @@ namespace MVCMailSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail, List<Employee> recipients)
+        public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail)
         {
             //Wonho to set list of recipient GUIDS in a TempData[].
             //Need to retrieve that list and generate an Employee List here. 
-            //TEMP: Currently sending to all employees. 
-            recipients = db.empDB.ToList();
+            //TEMP: Currently sending to all employees.
+            List<Employee> recipients = db.empDB.ToList();
             
+            //TEST TEST TEST
+            string gotem = ViewBag.SelectedEmployees;
+                        
             //Set timestamp on message. 
             DateTime timesent = new DateTime(); timesent = DateTime.Now;
             mail.dateSent = timesent;

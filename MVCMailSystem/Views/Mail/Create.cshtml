@@ -10,6 +10,8 @@
 
 <p>Mail From: @ViewBag.username @ViewBag.uid</p>
 
+@Html.Action("Index", "TreeView");
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
