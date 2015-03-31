@@ -17,22 +17,42 @@ namespace MVCMailSystem.Controllers
         // GET: /Employee/
         public ActionResult Index()
         {
-            List<Employee> empList = db.empDB.ToList();
+            List<Employee> empList = null;
+            try
+            {
+                empList = db.empDB.ToList();
+                
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
             return View(empList);
         }
 
         // GET: /Employee/Details/5
         public ActionResult Details(Guid? id)
         {
-            if (id == null)
+            Employee employee = null;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                employee = db.empDB.Find(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
             }
-            Employee employee = db.empDB.Find(id);
-            if (employee == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
+            
             return View(employee);
         }
 
@@ -49,12 +69,20 @@ namespace MVCMailSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="EmployeeID,username,stafftype,firstname,lastname,mgrID")] Employee employee)
         {
-            if (ModelState.IsValid)
+            try
             {
-                employee.EmployeeID = Guid.NewGuid();
-                db.empDB.Add(employee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    employee.EmployeeID = Guid.NewGuid();
+                    db.empDB.Add(employee);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
 
             return View(employee);
@@ -63,15 +91,25 @@ namespace MVCMailSystem.Controllers
         // GET: /Employee/Edit/5
         public ActionResult Edit(Guid? id)
         {
-            if (id == null)
+            Employee employee = null;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                employee = db.empDB.Find(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
             }
-            Employee employee = db.empDB.Find(id);
-            if (employee == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
+            
             return View(employee);
         }
 
@@ -82,27 +120,46 @@ namespace MVCMailSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="EmployeeID,username,stafftype,firstname,lastname,mgrID")] Employee employee)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(employee).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(employee).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
+            
             return View(employee);
         }
 
         // GET: /Employee/Delete/5
         public ActionResult Delete(Guid? id)
         {
-            if (id == null)
+            Employee employee = null;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                employee = db.empDB.Find(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
             }
-            Employee employee = db.empDB.Find(id);
-            if (employee == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
+           
             return View(employee);
         }
 
@@ -111,19 +168,36 @@ namespace MVCMailSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Employee employee = db.empDB.Find(id);
-            db.empDB.Remove(employee);
-            db.SaveChanges();
+            try
+            {
+                Employee employee = db.empDB.Find(id);
+                db.empDB.Remove(employee);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
+            
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
         }
     }
 }
