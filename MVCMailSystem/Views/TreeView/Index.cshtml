@@ -6,7 +6,9 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div id="tree">
+<br/><b>Check boxes to select Message Recipients: </b>
+<p></p>
+<div id="tree" style="border: 1px solid #000">
     <ul>
         @foreach (var item in Model)
         {
@@ -86,20 +88,19 @@
 </script>
 
 <!-- button that fires display_selected_node function above on click -->
-<button onclick="display_selected_node()">See Tree Data from Client</button>
+<button onclick="display_selected_node()">Set Message Recipients</button>
 
 <br />
 <br />
 <br />
 
 @*The results generated at client side displayed here.*@
-Selected Node IDs:
+Selected Employee IDs:
 <div id="result_ids"></div>
 
 <br />
-<br />
 
-Selected Node Texts:
+Selected Recipient Names:
 <div id="result_texts"></div>
 
 <br />
@@ -117,7 +118,7 @@ Selected Node Texts:
                 - JStree version of selected node ids
         *@
         <input id="selected_ids" name="employees" type="hidden" />
-        <input type="submit" value="Send To Server" onclick="display_selected_node()" />
+        <input type="submit" value="Proceed to Message Creation" onclick="display_selected_node()" />
     </fieldset>
 }
 
@@ -125,5 +126,7 @@ Selected Node Texts:
     The refined version of selected node ids that are retieved from the server
     display at here.
 *@
-<h2>Refined Version of Selected Node IDs from the Server:</h2>
-<h3>@ViewBag.SelectedEmployees</h3>
+@*
+    <h2>Refined Version of Selected Node IDs from the Server:</h2>
+    <h3>@ViewBag.SelectedEmployees</h3>
+*@
