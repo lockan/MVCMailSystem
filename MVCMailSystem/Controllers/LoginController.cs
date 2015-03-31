@@ -20,6 +20,7 @@ namespace MVCMailSystem.Controllers
             if (TempData["errorMessage"] != null) @ViewBag.errorMessage = TempData["errorMessage"].ToString();
             //SeleniumDriver selenium = new SeleniumDriver();
             //selenium.LoginTest();
+            /*
             List<SelectListItem> arbitrarylist = new List<SelectListItem>
             {
                 new SelectListItem { Text = "Arbitrary 1", Value="Arbitrary1" },
@@ -27,47 +28,57 @@ namespace MVCMailSystem.Controllers
                 new SelectListItem { Text = "Arbitrary 3", Value="Arbitrary3" }
             };
             ViewBag.alist = arbitrarylist;
+            */
             return View();
         }
 
         public ActionResult Login(string username, string ArbitraryList)
-        {            
-            
-            Employee emp = db.empDB.SingleOrDefault(user => user.username == username);
-            if (emp != null)
-            //if (db.empDB.Find(username) != null)
+        {
+
+            try
             {
-                this.Session.Add("username", emp.username);
-                this.Session.Add("stafftype", emp.stafftype);
-                this.Session.Add("empID", emp.EmployeeID);
-                this.Session.Add("mgrID", emp.mgrID);
-                
-                switch (emp.stafftype)
+                Employee emp = db.empDB.SingleOrDefault(user => user.username == username);
+                if (emp != null)
+                //if (db.empDB.Find(username) != null)
                 {
-                    case ("admin"):
-                        {
-                            return RedirectToAction("Index", "Mail", new { username = username });
-                        }
-                    case ("manager"):
-                        {
-                            return RedirectToAction("Index", "Mail", new { username = username });
-                        }
-                    case ("staff"):
-                        {
-                            return RedirectToAction("Index", "Mail", new { username = username });
-                        }
-                    default:
-                        {
-                            TempData["errorMessage"] = "ERROR: Could not identify user staff type. Please try again.";
-                            return RedirectToAction("Index");
-                        }
+                    this.Session.Add("username", emp.username);
+                    this.Session.Add("stafftype", emp.stafftype);
+                    this.Session.Add("empID", emp.EmployeeID);
+                    this.Session.Add("mgrID", emp.mgrID);
+
+                    switch (emp.stafftype)
+                    {
+                        case ("admin"):
+                            {
+                                return RedirectToAction("Index", "Mail", new { username = username });
+                            }
+                        case ("manager"):
+                            {
+                                return RedirectToAction("Index", "Mail", new { username = username });
+                            }
+                        case ("staff"):
+                            {
+                                return RedirectToAction("Index", "Mail", new { username = username });
+                            }
+                        default:
+                            {
+                                TempData["errorMessage"] = "ERROR: Could not identify user staff type. Please try again.";
+                                return RedirectToAction("Index");
+                            }
+                    }
+                }
+                else
+                {
+                    TempData["errorMessage"] = "ERROR: Bad username or password. Please try again.";
+                    return RedirectToAction("Index");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                TempData["errorMessage"] = "ERROR: Bad username or password. Please try again.";
-                return RedirectToAction("Index");
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
+            return RedirectToAction("Index");
         }
     }
 }
