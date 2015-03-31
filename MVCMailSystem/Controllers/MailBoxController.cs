@@ -22,40 +22,70 @@ namespace MVCMailSystem.Controllers
                 + " JOIN Mails ON MailBoxes.mailID = Mails.MailID "
                 + " JOIN Employees ON Mails.senderID = Employees.EmployeeID";
             */
-
-            List<MailBox> mailboxlist = db.mailboxDB.ToList();
+            List<MailBox> mailboxlist = null;
+            try
+            {
+                mailboxlist = db.mailboxDB.ToList();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+            }
             
             return View(mailboxlist);
         }
 
         // GET: /MailBox/Details/5
+        //TODO: Details is broken, needs fixing. Check view first. 
         public ActionResult Details(Guid? id)
         {
-            if (id == null)
+            List<MailBox> mailboxlist = null;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                //MailBox mailbox = db.mailboxDB.Find(id);
+                mailboxlist = db.mailboxDB.SqlQuery("SELECT * FROM MailBoxes").ToList();
+                if (mailboxlist.Count == 0)
+                {
+                    return HttpNotFound();
+                }
             }
-            //MailBox mailbox = db.mailboxDB.Find(id);
-            List<MailBox> mailboxlist = db.mailboxDB.SqlQuery("SELECT * FROM MailBoxes").ToList();
-            if (mailboxlist.Count == 0)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
             }
+            
             return View(mailboxlist);
         }
 
         // GET: /MailBox/Delete/5
+        //TODO: Delete is broken, needs fixing. Check view first. 
         public ActionResult Delete(Guid? id)
         {
-            if (id == null)
+            MailBox mailbox = null;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                mailbox = db.mailboxDB.Find(id);
+                if (mailbox == null)
+                {
+                    return HttpNotFound();
+                }
             }
-            MailBox mailbox = db.mailboxDB.Find(id);
-            if (mailbox == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
             }
+            
             return View(mailbox);
         }
 
@@ -64,19 +94,37 @@ namespace MVCMailSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            MailBox mailbox = db.mailboxDB.Find(id);
-            db.mailboxDB.Remove(mailbox);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                MailBox mailbox = db.mailboxDB.Find(id);
+                db.mailboxDB.Remove(mailbox);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+            }
+            return RedirectToAction("Index"); 
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception ex) 
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+            }
+            
         }
     }
 }
