@@ -19,23 +19,29 @@ namespace MVCMailSystem.Controllers
         public ActionResult Index()
         {
             ViewBag.ErrorMassage = "";
+            List<Employee> employeelist = null;
+            List<MailBox> mailboxlist = null;
+
             try
             {
-                return View(db.empDB.ToList());
-            } catch (Exception e)
+                employeelist = db.empDB.ToList();
+                mailboxlist = db.mailboxDB.ToList();
+
+                var viewModel = new TreeViewVM();
+                {
+                    viewModel.EmployeeVM = employeelist;
+                    viewModel.MailBoxVM = mailboxlist;
+                };
+                return View(viewModel);
+
+                //return View(db.empDB.ToList());
+            } 
+            catch (Exception e)
             {
                 ViewBag.ErrorMassage = "Unable to retrieve data.";
                 return View();
             }
-	    List<Employee> employeelist = db.empDB.ToList();
-            List<MailBox> mailboxlist = db.mailboxDB.ToList();
-            var viewModel = new TreeViewVM();
-            {
-                viewModel.EmployeeVM = employeelist;
-                viewModel.MailBoxVM = mailboxlist;
-            };
-
-            return View(viewModel);
+            
             //return View(db.Employees.ToList());
            // return View(db.empDB.ToList());
         }
