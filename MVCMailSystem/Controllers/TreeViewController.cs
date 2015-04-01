@@ -23,7 +23,7 @@ namespace MVCMailSystem.Controllers
         {
             TempData["recipients"] = employees;
 
-            return RedirectToAction("Create", "Mail", new { sender_id = this.Session["empID"] });
+            return RedirectToAction("Create", "Mail", new { sender_id = this.Session["RecipientID"] });
         }
     }
 }

@@ -24,18 +24,18 @@
         <p> Note: senderID is a temp field for now. You can view the Employees list to copy/paste a valid employee GUID for testing. 
         <br />Once integrated this would be the passed Guid of the logged in manager, stored in a hidden field. </p>
         <div class="form-group">
-            @Html.LabelFor(model => model.senderID, new { @class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.SenderID, new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.senderID, null, "senderID")        
-                @Html.ValidationMessageFor(model => model.senderID)
+                @Html.EditorFor(model => model.SenderID, null, "senderID")        
+                @Html.ValidationMessageFor(model => model.SenderID)
             </div>
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.text, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MailText, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.text, new { @class = "form-control", @rows = 5 })
-                @Html.ValidationMessageFor(model => model.text)
+                @Html.TextAreaFor(model => model.MailText, new { @class = "form-control", @rows = 5 })
+                @Html.ValidationMessageFor(model => model.MailText)
             </div>
         </div>
 

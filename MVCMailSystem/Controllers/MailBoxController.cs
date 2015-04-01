@@ -18,9 +18,9 @@ namespace MVCMailSystem.Controllers
         public ActionResult Index()
         {
             /*
-            String joinstring = "SELECT  Employees.username, Mails.text, Mails.dateSent, MailBoxes.dateRcvd, MailBoxes.dateRead FROM MailBoxes"
-                + " JOIN Mails ON MailBoxes.mailID = Mails.MailID "
-                + " JOIN Employees ON Mails.senderID = Employees.EmployeeID";
+            String joinstring = "SELECT  Employees.EmailAddress, Mails.MailText, Mails.DateSent, MailBoxes.DateReceived, MailBoxes.DateRead FROM MailBoxes"
+                + " JOIN Mails ON MailBoxes.MailID = Mails.MailID "
+                + " JOIN Employees ON Mails.SenderID = Employees.ID";
             */
             List<MailBox> mailboxlist = null;
             try

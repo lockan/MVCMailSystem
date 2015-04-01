@@ -5,13 +5,13 @@ namespace MVCMailSystem.Models
 {
     public class Employee
     {
-        public Guid                 EmployeeID  { get; set; }   //Primary Key
-        public string               username    { get; set; }
-        public string               stafftype   { get; set; }
-        public string               firstname   { get; set; }
-        public string               lastname    { get; set; }
+        public Guid                 ID  { get; set; }   //Primary Key
+        public string               EmailAddress    { get; set; }
+        public string               StaffType   { get; set; }
+        public string               FirstName   { get; set; }
+        public string               LastName    { get; set; }
         
         //Self referential key to a userID representing the staff member's superior. Nullable.
-        public Nullable<Guid>       mgrID       { get; set; }   
+        public Nullable<Guid>       ManagerID       { get; set; }   
     }
 }

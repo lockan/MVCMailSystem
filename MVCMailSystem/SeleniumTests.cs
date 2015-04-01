@@ -21,7 +21,7 @@ namespace MVCMailSystem
         public void LoginTest() {
             driver.Url = siteurl;
             driver.Navigate().GoToUrl(siteurl + "/Login/");
-            driver.FindElement(By.Id("username")).SendKeys("SeleniumTest");
+            driver.FindElement(By.Id("EmailAddress")).SendKeys("SeleniumTest");
             
         }
 
