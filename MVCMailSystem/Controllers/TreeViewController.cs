@@ -4,6 +4,9 @@ using System.Net;
 using System.Web.Mvc;
 using MVCMailSystem.Models;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using MVCMailSystem.ViewModel;
 
 namespace MVCMailSystem.Controllers
 {
@@ -24,6 +27,17 @@ namespace MVCMailSystem.Controllers
                 ViewBag.ErrorMassage = "Unable to retrieve data.";
                 return View();
             }
+	    List<Employee> employeelist = db.empDB.ToList();
+            List<MailBox> mailboxlist = db.mailboxDB.ToList();
+            var viewModel = new TreeViewVM();
+            {
+                viewModel.EmployeeVM = employeelist;
+                viewModel.MailBoxVM = mailboxlist;
+            };
+
+            return View(viewModel);
+            //return View(db.Employees.ToList());
+           // return View(db.empDB.ToList());
         }
 
         [HttpPost]
