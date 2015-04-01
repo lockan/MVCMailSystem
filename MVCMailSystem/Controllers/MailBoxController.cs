@@ -38,29 +38,34 @@ namespace MVCMailSystem.Controllers
 
         // GET: /MailBox/Details/5
         //TODO: Details is broken, needs fixing. Check view first. 
-        public ActionResult Details(Guid? id)
+        public ActionResult Details(Guid? id, Guid? mail)
         {
-            List<MailBox> mailboxlist = null;
+            //List<MailBox> mailboxlist = null;
             try
             {
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                //MailBox mailbox = db.mailboxDB.Find(id);
-                mailboxlist = db.mailboxDB.SqlQuery("SELECT * FROM MailBoxes").ToList();
-                if (mailboxlist.Count == 0)
+                MailBox mailbox = db.mailboxDB.Find(id);
+                Mail mailmsg = db.mailDB.Find(mail);
+               // mailboxlist = db.mailboxDB.SqlQuery("SELECT * FROM MailBoxes").ToList();
+                if (mailbox == null)
                 {
                     return HttpNotFound();
                 }
+                ViewBag.mailtext = mailmsg.MailText.ToString();
+                mailbox.DateRead = DateTime.Now;
+                db.SaveChanges();
+                return View(mailbox);
             }
             catch (Exception ex)
             {
                 //TODO: Use Terrence's logging function. 
                 System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
             }
-            
-            return View(mailboxlist);
+
+            return View();
         }
 
         // GET: /MailBox/Delete/5

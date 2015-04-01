@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVCMailSystem.Models.Employee>
+﻿@model MVCMailSystem.ViewModel.TreeViewVM
 
 @{
     ViewBag.Title = "Organization Structure";
@@ -10,27 +10,96 @@
 <p></p>
 <div id="tree" style="border: 1px solid #000">
     <ul>
-        @foreach (var item in Model)
+        @foreach (var item in Model.EmployeeVM)
         {
+            var unreadmsg = false;
             if (item.StaffType == "admin")
-            {
+            {  foreach (var itemMail in Model.MailBoxVM)
+                {
+                  if (itemMail.RecipientID == item.ID && itemMail.DateRead != null)
+                  {
+                      unreadmsg = true;
+                      break;
+                  }
+                  else {
+                      unreadmsg = false;
+                  }
+                }
                 <li id=@item.ID>
-                    @Html.DisplayFor(modelItem => item.FirstName)
+                    @if (unreadmsg)
+                    {
+                        <span style="color:red">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </span>
+                    }
+                    else
+                    {
+                        <span style="color:green">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </span>
+                    }
+    
                     <ul>
-                        @foreach (var t in Model)
+                        @foreach (var t in Model.EmployeeVM)
                         {
-                            if (t.StaffType == "manager")
+                            foreach (var tMail in Model.MailBoxVM)
                             {
+                                if (tMail.RecipientID == item.ID && tMail.DateRead != null)
+                                {
+                                    unreadmsg = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    unreadmsg = false;
+                                }
+                            }
+                            if (t.StaffType == "manager")
+                            { 
                                 <li id=@t.ID>
-                                    @Html.DisplayFor(modelItem => t.FirstName)
-                                    <ul>
-                                        @foreach (var s in Model)
+                                   @if (unreadmsg)
+                                    {
+                                        <span style="color:red">
+                                            @Html.DisplayFor(modelItem => t.FirstName)
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:green">
+                                            @Html.DisplayFor(modelItem => t.FirstName)
+                                        </span>
+                                    }
+                                <ul>
+                                        @foreach (var s in Model.EmployeeVM)
                                         {
+                                            foreach (var sMail in Model.MailBoxVM)
+                                            {
+                                                if (sMail.RecipientID == item.ID && sMail.DateRead != null)
+                                                {
+                                                    unreadmsg = true;
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    unreadmsg = false;
+                                                }
+                                            }
                                             if (t.ID == s.ManagerID)
                                             {
                                                 <li id=@s.ID>
-                                                    @Html.DisplayFor(modelItem => s.FirstName)
-                                                </li>
+                                                    @if (unreadmsg)
+                                                    {
+                                                        <span style="color:red">
+                                                            @Html.DisplayFor(modelItem => s.FirstName)
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color:green">
+                                                            @Html.DisplayFor(modelItem => s.FirstName)
+                                                        </span>
+                                                    }
+                                                </li>    
                                             }
                                         }
                                     </ul>
