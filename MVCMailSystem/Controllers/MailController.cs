@@ -17,21 +17,40 @@ namespace MVCMailSystem.Controllers
         // GET: /Mail/
         public ActionResult Index()
         {
-            List<Mail> empList = db.mailDB.ToList();
+            List<Mail> empList = null;
+            try
+            {
+                empList = db.mailDB.ToList();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
+            
             return View(empList);
         }
 
         // GET: /Mail/Details/5
         public ActionResult Details(Guid? id)
         {
-            if (id == null)
+            Mail mail = null;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                mail = db.mailDB.Find(id);
+                if (mail == null)
+                {
+                    return HttpNotFound();
+                }
             }
-            Mail mail = db.mailDB.Find(id);
-            if (mail == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
             return View(mail);
         }
@@ -39,8 +58,17 @@ namespace MVCMailSystem.Controllers
         // GET: /Mail/Create
         public ActionResult Create(Guid sender_id)
         {
-            Mail m = new Mail();
-            m.senderID = sender_id;
+            Mail m = null;
+            try
+            {
+                m = new Mail();
+                m.senderID = sender_id;
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
             
             return View(m);
         }
@@ -52,49 +80,58 @@ namespace MVCMailSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail)
         {
-            //Wonho to set list of recipient GUIDS in a TempData[].
-
-            //Retrieve that list and generate an Employee List here.     
-            string ids = TempData["recipients"].ToString();
-            string[] ids_parsed = ids.Split(',');
-            string ids_formatted = "";
-            foreach (string idstr in ids_parsed) {
-                ids_formatted += "'" + idstr +  "', ";
-            }
-            ids_formatted = ids_formatted.Substring(0, ids_formatted.Length - 2);
-
-            List<Employee> recipients = 
-                db.empDB.SqlQuery("SELECT * FROM employees "
-                    + "WHERE EmployeeID IN ( " + ids_formatted + " )").ToList();
-       
-            //Set timestamp on message. 
-            DateTime timesent = new DateTime(); timesent = DateTime.Now;
-            mail.dateSent = timesent;
+            List<Employee> recipients = null;
             
-            if (ModelState.IsValid)
+            try 
             {
-                //populate new message in Mail table. 
-                mail.MailID = Guid.NewGuid();
-                db.mailDB.Add(mail);
-                db.SaveChanges();
-                
-                //END TEMP
-                
-                //add message links to MailBox table for all users in list. 
-                
-                foreach (Employee emp in recipients)
+                //Retrieve that list and generate an Employee List here.     
+                string ids = TempData["recipients"].ToString();
+                string[] ids_parsed = ids.Split(',');
+                string ids_formatted = "";
+                foreach (string idstr in ids_parsed)
                 {
-                    MailBox mailbox = new MailBox();
-                    mailbox.MailBoxID = Guid.NewGuid();
-                    mailbox.mailID = mail.MailID;   //Only need to set the mailID once. 
-                    mailbox.empID = emp.EmployeeID;
-                    mailbox.dateRcvd = null;
-                    mailbox.dateRead = null;
-                    db.mailboxDB.Add(mailbox);
+                    ids_formatted += "'" + idstr + "', ";
                 }
-                db.SaveChanges();
+                ids_formatted = ids_formatted.Substring(0, ids_formatted.Length - 2);
 
-                return RedirectToAction("Index");
+                recipients =
+                    db.empDB.SqlQuery("SELECT * FROM employees "
+                        + "WHERE EmployeeID IN ( " + ids_formatted + " )").ToList();
+
+                //Set timestamp on message. 
+                DateTime timesent = new DateTime(); timesent = DateTime.Now;
+                mail.dateSent = timesent;
+
+                if (ModelState.IsValid)
+                {
+                    //populate new message in Mail table. 
+                    mail.MailID = Guid.NewGuid();
+                    db.mailDB.Add(mail);
+                    db.SaveChanges();
+
+                    //END TEMP
+
+                    //add message links to MailBox table for all users in list. 
+
+                    foreach (Employee emp in recipients)
+                    {
+                        MailBox mailbox = new MailBox();
+                        mailbox.MailBoxID = Guid.NewGuid();
+                        mailbox.mailID = mail.MailID;   //Only need to set the mailID once. 
+                        mailbox.empID = emp.EmployeeID;
+                        mailbox.dateRcvd = null;
+                        mailbox.dateRead = null;
+                        db.mailboxDB.Add(mailbox);
+                    }
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
 
             return View(mail);
@@ -105,15 +142,25 @@ namespace MVCMailSystem.Controllers
         // GET: /Mail/Delete/5
         public ActionResult Delete(Guid? id)
         {
-            if (id == null)
+            Mail mail = null;
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                mail = db.mailDB.Find(id);
+                if (mail == null)
+                {
+                    return HttpNotFound();
+                }
             }
-            Mail mail = db.mailDB.Find(id);
-            if (mail == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
+            
             return View(mail);
         }
 
@@ -122,19 +169,37 @@ namespace MVCMailSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Mail mail = db.mailDB.Find(id);
-            db.mailDB.Remove(mail);
-            db.SaveChanges();
+            try
+            {
+                Mail mail = db.mailDB.Find(id);
+                db.mailDB.Remove(mail);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
+
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                //TODO: Use Terrence's logging function. 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
+            }
         }
     }
 }
