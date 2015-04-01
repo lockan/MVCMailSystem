@@ -67,13 +67,13 @@ namespace MVCMailSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="EmployeeID,username,stafftype,firstname,lastname,mgrID")] Employee employee)
+        public ActionResult Create([Bind(Include="ID,EmailAddress,StaffType,FirstName,LastName,ManagerID")] Employee employee)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    employee.EmployeeID = Guid.NewGuid();
+                    employee.ID = Guid.NewGuid();
                     db.empDB.Add(employee);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -118,7 +118,7 @@ namespace MVCMailSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="EmployeeID,username,stafftype,firstname,lastname,mgrID")] Employee employee)
+        public ActionResult Edit([Bind(Include="ID,EmailAddress,StaffType,FirstName,LastName,ManagerID")] Employee employee)
         {
             try
             {

@@ -62,7 +62,7 @@ namespace MVCMailSystem.Controllers
             try
             {
                 m = new Mail();
-                m.senderID = sender_id;
+                m.SenderID = sender_id;
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace MVCMailSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="MailID,text,dateSent,senderID")] Mail mail)
+        public ActionResult Create([Bind(Include="MailID,MailText,DateSent,SenderID")] Mail mail)
         {
             List<Employee> recipients = null;
             
@@ -96,11 +96,11 @@ namespace MVCMailSystem.Controllers
 
                 recipients =
                     db.empDB.SqlQuery("SELECT * FROM employees "
-                        + "WHERE EmployeeID IN ( " + ids_formatted + " )").ToList();
+                        + "WHERE ID IN ( " + ids_formatted + " )").ToList();
 
                 //Set timestamp on message. 
                 DateTime timesent = new DateTime(); timesent = DateTime.Now;
-                mail.dateSent = timesent;
+                mail.DateSent = timesent;
 
                 if (ModelState.IsValid)
                 {
@@ -117,10 +117,10 @@ namespace MVCMailSystem.Controllers
                     {
                         MailBox mailbox = new MailBox();
                         mailbox.MailBoxID = Guid.NewGuid();
-                        mailbox.mailID = mail.MailID;   //Only need to set the mailID once. 
-                        mailbox.empID = emp.EmployeeID;
-                        mailbox.dateRcvd = null;
-                        mailbox.dateRead = null;
+                        mailbox.MailID = mail.MailID;   //Only need to set the MailID once. 
+                        mailbox.RecipientID = emp.ID;
+                        mailbox.DateReceived = null;
+                        mailbox.DateRead = null;
                         db.mailboxDB.Add(mailbox);
                     }
                     db.SaveChanges();

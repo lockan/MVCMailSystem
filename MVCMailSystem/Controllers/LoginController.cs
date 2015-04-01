@@ -37,16 +37,16 @@ namespace MVCMailSystem.Controllers
 
             try
             {
-                Employee emp = db.empDB.SingleOrDefault(user => user.username == username);
+                Employee emp = db.empDB.SingleOrDefault(user => user.EmailAddress == username);
                 if (emp != null)
-                //if (db.empDB.Find(username) != null)
+                //if (db.empDB.Find(EmailAddress) != null)
                 {
-                    this.Session.Add("username", emp.username);
-                    this.Session.Add("stafftype", emp.stafftype);
-                    this.Session.Add("empID", emp.EmployeeID);
-                    this.Session.Add("mgrID", emp.mgrID);
+                    this.Session.Add("EmailAddress", emp.EmailAddress);
+                    this.Session.Add("StaffType", emp.StaffType);
+                    this.Session.Add("RecipientID", emp.ID);
+                    this.Session.Add("ManagerID", emp.ManagerID);
 
-                    switch (emp.stafftype)
+                    switch (emp.StaffType)
                     {
                         case ("admin"):
                             {
@@ -69,7 +69,7 @@ namespace MVCMailSystem.Controllers
                 }
                 else
                 {
-                    TempData["errorMessage"] = "ERROR: Bad username or password. Please try again.";
+                    TempData["errorMessage"] = "ERROR: Bad EmailAddress or password. Please try again.";
                     return RedirectToAction("Index");
                 }
             }

@@ -12,24 +12,24 @@
     <ul>
         @foreach (var item in Model)
         {
-            if (item.stafftype == "admin")
+            if (item.StaffType == "admin")
             {
-                <li id=@item.EmployeeID>
-                    @Html.DisplayFor(modelItem => item.firstname)
+                <li id=@item.ID>
+                    @Html.DisplayFor(modelItem => item.FirstName)
                     <ul>
                         @foreach (var t in Model)
                         {
-                            if (t.stafftype == "manager")
+                            if (t.StaffType == "manager")
                             {
-                                <li id=@t.EmployeeID>
-                                    @Html.DisplayFor(modelItem => t.firstname)
+                                <li id=@t.ID>
+                                    @Html.DisplayFor(modelItem => t.FirstName)
                                     <ul>
                                         @foreach (var s in Model)
                                         {
-                                            if (t.EmployeeID == s.mgrID)
+                                            if (t.ID == s.ManagerID)
                                             {
-                                                <li id=@s.EmployeeID>
-                                                    @Html.DisplayFor(modelItem => s.firstname)
+                                                <li id=@s.ID>
+                                                    @Html.DisplayFor(modelItem => s.FirstName)
                                                 </li>
                                             }
                                         }

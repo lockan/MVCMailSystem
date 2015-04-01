@@ -5,7 +5,7 @@
 
     var grid = new System.Web.Helpers.WebGrid(source: Model, rowsPerPage: 10);
 }
-
+@{}
 <h2>MailBoxes</h2>
 
 <p />This shows the GUID links between a messageID and an employee ID. Each GUID pair represents a single message instance.
@@ -17,57 +17,22 @@
 
 
 <table class="table">
-    @*<tr>
-        <th>
-            @Html.DisplayNameFor(model => model.empID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mailID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.dateRcvd)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.dateRead)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.empID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mailID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dateRcvd)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dateRead)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.MailBoxID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MailBoxID })
-        </td>
-    </tr>*@
 
     @grid.GetHtml(
         tableStyle: "gridTable",
         headerStyle: "head",
         alternatingRowStyle: "alt",
         columns: grid.Columns(
-                    grid.Column("empID"),
-                    grid.Column("mailID"),
-                    grid.Column("dateRcvd"),
-                    grid.Column("dateRead"),
+                    grid.Column("RecipientID"),
+                    grid.Column("MailID"),
+                    grid.Column("DateReceived"),
+                    grid.Column("DateRead"),
                     grid.Column(
                         header: "",
                         style: "text-align-center",
                         format: item => new HtmlString(
-                            Html.ActionLink("Details", "Details", new { ID = item.empID }).ToString() + " | " +
-                            Html.ActionLink("Delete", "Delete", new { ID = item.empID }).ToString()
+                                    Html.ActionLink("Details", "Details", new { ID = item.RecipientID }).ToString() + " | " +
+                                    Html.ActionLink("Delete", "Delete", new { ID = item.RecipientID }).ToString()
                     )
                 )
         )
