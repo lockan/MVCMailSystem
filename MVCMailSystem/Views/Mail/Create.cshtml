@@ -2,13 +2,11 @@
 
 @{
     ViewBag.Title = "Create";
-    ViewBag.username = this.Session["username"];
-    ViewBag.uid = this.Session["empID"];
+    ViewBag.username = this.Session["EmailAddress"];
+    ViewBag.uid = this.Session["RecipientID"];
 }
 
-<h2>Create</h2>
-
-<p>Mail From: @ViewBag.username @ViewBag.uid</p>
+<h2>Create Message</h2>
 
 @*Html.Action("Index", "TreeView");*@
 
@@ -17,16 +15,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Mail</h4>
         <hr />
         @Html.ValidationSummary(true)
 
-        <p> Note: senderID is a temp field for now. You can view the Employees list to copy/paste a valid employee GUID for testing. 
-        <br />Once integrated this would be the passed Guid of the logged in manager, stored in a hidden field. </p>
         <div class="form-group">
-            @Html.LabelFor(model => model.SenderID, new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SenderID, null, "senderID")        
+                <p><b>Sender: </b>@ViewBag.username 
+                @Html.HiddenFor(model => model.SenderID)
                 @Html.ValidationMessageFor(model => model.SenderID)
             </div>
         </div>
