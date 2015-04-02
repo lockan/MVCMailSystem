@@ -17,18 +17,20 @@ namespace MVCMailSystem.Controllers
         // GET: /Mail/
         public ActionResult Index()
         {
-            List<Mail> empList = null;
+            List<Mail> sentMsgs = null;
             try
             {
-                empList = db.mailDB.ToList();
+                string currentid = this.Session["RecipientID"].ToString();
+                Guid userGuid = new Guid(currentid);
+                sentMsgs = db.mailDB.Where(m => m.SenderID == userGuid).ToList();
             }
             catch (Exception ex)
             {
                 //TODO: Use Terrence's logging function. 
                 System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
-            
-            return View(empList);
+
+            return View(sentMsgs);
         }
 
         // GET: /Mail/Details/5
