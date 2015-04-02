@@ -27,7 +27,6 @@
                 header: "",
                 style: "text-align-center",
                 format: item => new HtmlString(
-                    Html.ActionLink("Edit", "Edit", new { ID = item.MailID }).ToString() + " | " +
                     Html.ActionLink("Details", "Details", new { ID = item.MailID }).ToString() + " | " +
                     Html.ActionLink("Delete", "Delete", new { ID = item.MailID }).ToString()
                 )
