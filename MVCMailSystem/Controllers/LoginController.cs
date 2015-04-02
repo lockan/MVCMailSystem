@@ -50,15 +50,15 @@ namespace MVCMailSystem.Controllers
                     {
                         case ("admin"):
                             {
-                                return RedirectToAction("Index", "Mail", new { username = username });
+                                return RedirectToAction("Index", "MailBox", new { username = username });
                             }
                         case ("manager"):
                             {
-                                return RedirectToAction("Index", "Mail", new { username = username });
+                                return RedirectToAction("Index", "MailBox", new { username = username });
                             }
                         case ("staff"):
                             {
-                                return RedirectToAction("Index", "Mail", new { username = username });
+                                return RedirectToAction("Index", "MailBox", new { username = username });
                             }
                         default:
                             {

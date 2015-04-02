@@ -6,14 +6,9 @@
     var grid = new System.Web.Helpers.WebGrid(source: Model, rowsPerPage: 10);
 }
 
-@*<h2>Mail</h2>
-    <p/>This is a list of all messages sent. You can create a new message from here, but you'll need a sender GUID from the employees page.
-    <br/> You can delete messages from here, but this will not delete them from the Mailbox table. Delete ability for this table will be removed from the final version.
-    <br/> Individual users will be able to delete specific user-message instances from the mailbox table, but the mail table always stores all messages sent.*@
-
 <p>
     <div class="jumbotron">
-        <h1>MVC Mail System</h1>
+        <h1>Mail Outbox</h1>
     </div>
 </p>
 <p>
@@ -26,10 +21,8 @@
         headerStyle: "head",
         alternatingRowStyle: "alt",
         columns: grid.Columns(
-            grid.Column("MailID"),
+            grid.Column("DateSent"),    
             grid.Column("MailText"),
-            grid.Column("DateSent"),
-            grid.Column("SenderID"),
             grid.Column(
                 header: "",
                 style: "text-align-center",

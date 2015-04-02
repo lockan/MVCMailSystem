@@ -17,9 +17,8 @@
             <div class="navbar-header">
                 @Html.ActionLink("Login", "Index", "Login", null, new { @class = "navbar-brand" })
                 <!--Removed Home controller link from here-->
-                @Html.ActionLink("Mail", "Index", "Mail", null, new { @class = "navbar-brand" })
-                @Html.ActionLink("MailBoxes", "Index", "MailBox", null, new { @class = "navbar-brand" })
-                @Html.ActionLink("Employees", "Index", "Employee", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Inbox", "Index", "MailBox", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Outbox", "Index", "Mail", null, new { @class = "navbar-brand" })
             </div>
         </div>
     </div>
