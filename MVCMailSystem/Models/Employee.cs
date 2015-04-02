@@ -9,7 +9,7 @@ namespace MVCMailSystem.Models
         public string               EmailAddress    { get; set; }
         public string               StaffType   { get; set; }
         public string               FirstName   { get; set; }
-        public string               LastName    { get; set; }
+        public string               Name    { get; set; }
         
         //Self referential key to a userID representing the staff member's superior. Nullable.
         public Nullable<Guid>       ManagerID       { get; set; }   

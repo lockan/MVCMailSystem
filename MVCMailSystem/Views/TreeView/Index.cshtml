@@ -29,13 +29,13 @@
                     @if (unreadmsg)
                     {
                         <span style="color:red">
-                            @Html.DisplayFor(modelItem => item.FirstName)
+                            @Html.DisplayFor(modelItem => item.Name)
                         </span>
                     }
                     else
                     {
                         <span style="color:green">
-                            @Html.DisplayFor(modelItem => item.FirstName)
+                            @Html.DisplayFor(modelItem => item.Name)
                         </span>
                     }
     
@@ -60,13 +60,13 @@
                                    @if (unreadmsg)
                                     {
                                         <span style="color:red">
-                                            @Html.DisplayFor(modelItem => t.FirstName)
+                                            @Html.DisplayFor(modelItem => t.Name)
                                         </span>
                                     }
                                     else
                                     {
                                         <span style="color:green">
-                                            @Html.DisplayFor(modelItem => t.FirstName)
+                                            @Html.DisplayFor(modelItem => t.Name)
                                         </span>
                                     }
                                 <ul>
@@ -90,13 +90,13 @@
                                                     @if (unreadmsg)
                                                     {
                                                         <span style="color:red">
-                                                            @Html.DisplayFor(modelItem => s.FirstName)
+                                                            @Html.DisplayFor(modelItem => s.Name)
                                                         </span>
                                                     }
                                                     else
                                                     {
                                                         <span style="color:green">
-                                                            @Html.DisplayFor(modelItem => s.FirstName)
+                                                            @Html.DisplayFor(modelItem => s.Name)
                                                         </span>
                                                     }
                                                 </li>    

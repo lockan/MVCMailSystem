@@ -67,7 +67,7 @@ namespace MVCMailSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,EmailAddress,StaffType,FirstName,LastName,ManagerID")] Employee employee)
+        public ActionResult Create([Bind(Include="ID,EmailAddress,StaffType,FirstName,Name,ManagerID")] Employee employee)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace MVCMailSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,EmailAddress,StaffType,FirstName,LastName,ManagerID")] Employee employee)
+        public ActionResult Edit([Bind(Include="ID,EmailAddress,StaffType,FirstName,Name,ManagerID")] Employee employee)
         {
             try
             {

@@ -43,7 +43,7 @@ namespace MVCMailSystem.Controllers
                 {
                     this.Session.Add("EmailAddress", emp.EmailAddress);
                     this.Session.Add("StaffType", emp.StaffType);
-                    this.Session.Add("RecipientID", emp.ID);
+                    this.Session.Add("UserID", emp.ID);
                     this.Session.Add("ManagerID", emp.ManagerID);
 
                     switch (emp.StaffType)

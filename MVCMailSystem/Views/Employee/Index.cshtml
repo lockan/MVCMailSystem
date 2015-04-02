@@ -30,7 +30,7 @@ To test sending a message you'll need a Guid for the sender. You can copy one fr
             @Html.DisplayNameFor(model => model.firstname)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lastname)
+            @Html.DisplayNameFor(model => model.name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.mgrID)
@@ -53,7 +53,7 @@ To test sending a message you'll need a Guid for the sender. You can copy one fr
             @Html.DisplayFor(modelItem => item.firstname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.lastname)
+            @Html.DisplayFor(modelItem => item.name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.mgrID)
@@ -74,7 +74,7 @@ To test sending a message you'll need a Guid for the sender. You can copy one fr
                 grid.Column("EmailAddress"),
                 grid.Column("StaffType"),
                 grid.Column("FirstName"),
-                grid.Column("LastName"),
+                grid.Column("Name"),
                 grid.Column("ManagerID"),
                 grid.Column(
                     header: "",

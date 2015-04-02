@@ -55,7 +55,7 @@ namespace MVCMailSystem.Controllers
             {
                 TempData["recipients"] = employees;
 
-                return RedirectToAction("Create", "Mail", new { sender_id = this.Session["RecipientID"] });
+                return RedirectToAction("Create", "Mail", new { sender_id = this.Session["UserID"] });
             } catch (Exception e)
             {
                 ViewBag.ErrorMassage = "Unable to redirect page.";

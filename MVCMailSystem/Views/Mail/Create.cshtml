@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create";
     ViewBag.username = this.Session["EmailAddress"];
-    ViewBag.uid = this.Session["RecipientID"];
+    ViewBag.uid = this.Session["userID"];
 }
 
 <h2>Create Message</h2>
@@ -20,7 +20,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                <p><b>Sender: </b>@ViewBag.username 
+                <p><b>Sender: </b>@ViewBag.username
                 @Html.HiddenFor(model => model.SenderID)
                 @Html.ValidationMessageFor(model => model.SenderID)
             </div>

@@ -20,7 +20,7 @@ namespace MVCMailSystem.Controllers
             List<Mail> sentMsgs = null;
             try
             {
-                string currentid = this.Session["RecipientID"].ToString();
+                string currentid = this.Session["UserID"].ToString();
                 Guid userGuid = new Guid(currentid);
                 sentMsgs = db.mailDB.Where(m => m.SenderID == userGuid).ToList();
             }
