@@ -16,12 +16,13 @@
             if (item.StaffType == "admin")
             {  foreach (var itemMail in Model.MailBoxVM)
                 {
-                  if (itemMail.RecipientID == item.ID && itemMail.DateRead != null)
+                  if (itemMail.RecipientID == item.ID && itemMail.DateRead == null)
                   {
                       unreadmsg = true;
                       break;
                   }
-                  else {
+                  else if (itemMail.RecipientID == item.ID && itemMail.DateRead != null)
+                  {
                       unreadmsg = false;
                   }
                 }
@@ -44,12 +45,12 @@
                         {
                             foreach (var tMail in Model.MailBoxVM)
                             {
-                                if (tMail.RecipientID == item.ID && tMail.DateRead != null)
+                                if (tMail.RecipientID == t.ID && tMail.DateRead == null)
                                 {
                                     unreadmsg = true;
                                     break;
                                 }
-                                else
+                                else if ((tMail.RecipientID == t.ID && tMail.DateRead != null))
                                 {
                                     unreadmsg = false;
                                 }
@@ -74,12 +75,12 @@
                                         {
                                             foreach (var sMail in Model.MailBoxVM)
                                             {
-                                                if (sMail.RecipientID == item.ID && sMail.DateRead != null)
+                                                if (sMail.RecipientID == s.ID && sMail.DateRead == null)
                                                 {
                                                     unreadmsg = true;
                                                     break;
                                                 }
-                                                else
+                                                else if (sMail.RecipientID == s.ID && sMail.DateRead == null)
                                                 {
                                                     unreadmsg = false;
                                                 }

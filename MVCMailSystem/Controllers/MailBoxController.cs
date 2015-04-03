@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVCMailSystem.Models;
+using MVCMailSystem.ViewModel;
 
 namespace MVCMailSystem.Controllers
 {
@@ -22,18 +23,46 @@ namespace MVCMailSystem.Controllers
                 + " JOIN Mails ON MailBoxes.MailID = Mails.MailID "
                 + " JOIN Employees ON Mails.SenderID = Employees.ID";
             */
-            List<MailBox> mailboxlist = null;
+            IEnumerable<InBox> Mailboxlist = null;
+            List<Mail> Maillist = null;
+            List<Employee> Employeelist = null;
+            
+
+           
+
+            var viewModel = new MailBoxVM(); ;
             try
             {
-                mailboxlist = db.mailboxDB.ToList();
+                //Maillist = db.mailDB.ToList();
+                
+                string myid = this.Session["UserID"].ToString();
+                Guid myguid = new Guid(myid);
+                //Mailboxlist = db.mailboxDB.Where(mb => mb.RecipientID == myguid).ToList(); // mail received
+                //Maillist = db.mailDB.ToList(); // to get the senderID
+               // Employeelist = db.empDB.ToList(); // use senderID to get firstname
+                string sqlstatement = "SELECT Mails.*, MailBoxes.*, Employees.Name FROM MailBoxes, Mails, Employees WHERE MailBoxes.RecipientID = '" +
+                    myguid + "' AND MailBoxes.MailID = Mails.MailID AND (Mails.senderID = Employees.ID AND MailBoxes.MailID = Mails.MailID)";
+                Mailboxlist = db.Database.SqlQuery<InBox>(sqlstatement).ToList();
+                
+                //get the mails that the user sent
+                //Maillist = db.mailDB.Where(mb => mb.SenderID == myguid).ToList(); 
+
+                //viewModel.MailVM = Maillist;
+                //viewModel.BoxVM = Mailboxlist;
+                //viewModel.EmployeeVM = Employeelist;
+                
+
+            
+                // mailboxlist = db.mailboxDB.ToList();
+                //mailboxlist = db.mailboxDB.Where(mb => mb.RecipientID == myguid).ToList();
             }
             catch (Exception ex)
             {
                 //TODO: Use Terrence's logging function. 
-                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
-            
-            return View(mailboxlist);
+
+            return View(Mailboxlist);
         }
 
         // GET: /MailBox/Details/5
@@ -49,7 +78,7 @@ namespace MVCMailSystem.Controllers
                 }
                 MailBox mailbox = db.mailboxDB.Find(id);
                 Mail mailmsg = db.mailDB.Find(mail);
-               // mailboxlist = db.mailboxDB.SqlQuery("SELECT * FROM MailBoxes").ToList();
+                // mailboxlist = db.mailboxDB.SqlQuery("SELECT * FROM MailBoxes").ToList();
                 if (mailbox == null)
                 {
                     return HttpNotFound();
@@ -62,7 +91,7 @@ namespace MVCMailSystem.Controllers
             catch (Exception ex)
             {
                 //TODO: Use Terrence's logging function. 
-                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
 
             return View();
@@ -88,9 +117,9 @@ namespace MVCMailSystem.Controllers
             catch (Exception ex)
             {
                 //TODO: Use Terrence's logging function. 
-                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
-            
+
             return View(mailbox);
         }
 
@@ -109,9 +138,9 @@ namespace MVCMailSystem.Controllers
             catch (Exception ex)
             {
                 //TODO: Use Terrence's logging function. 
-                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
-            return RedirectToAction("Index"); 
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -124,12 +153,12 @@ namespace MVCMailSystem.Controllers
                 }
                 base.Dispose(disposing);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 //TODO: Use Terrence's logging function. 
-                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message); 
+                System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
-            
+
         }
     }
 }

@@ -1,5 +1,10 @@
 ﻿using System;
 using System.Data.Entity;
+using MVCMailSystem.ViewModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+
+
 
 namespace MVCMailSystem.Models
 {
@@ -23,7 +28,15 @@ namespace MVCMailSystem.Models
         
         //Timestamp when user actually reads the message (e.g. onClick or onSelected event?)
         //Set this when the user reads the message. NULL = "unread".  
-        public Nullable<DateTime>   DateRead    { get; set; }   //
-
+        public Nullable<DateTime>   DateRead    { get; set; }
+  
+        [NotMapped]
+        public string MailText { get; set; }
+        [NotMapped]
+        public Nullable<DateTime> DateSent { get; set; }
+        [NotMapped]
+        public Guid SenderID { get; set; }   //Foreign Key: userID from employee table
+        [NotMapped]
+        public IEnumerable<MailBox> maillist;
     }
 }
