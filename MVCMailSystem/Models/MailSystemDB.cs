@@ -14,5 +14,7 @@ namespace MVCMailSystem.Models
         public DbSet<Employee>  empDB       { get; set; }   // employee table - see Employee.cs
         public DbSet<Mail>      mailDB      { get; set; }   // mail table - see Mail.cs
         public DbSet<MailBox>   mailboxDB   { get; set; }   // mailbox table. - see MailBox.cs  
+
+        
     }
 }
