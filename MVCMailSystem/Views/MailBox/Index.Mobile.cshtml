@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MVCMailSystem.Models.InBox>
+
+
+@{
+    ViewBag.Title = "Inbox";  
+}
+
+<h2>MailBoxes (M)</h2>
+
+<h1>Received Mails</h1>
+
+  <table class="table">
+        <tr>
+            <th>
+               From
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MailText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateSent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateRead)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Name)
+                </td>
+ 
+                <td>
+                    @Html.DisplayFor(model => item.MailText)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.DateSent)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.DateRead)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.MailBoxID, mail = item.MailID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MailBoxID })
+                </td>
+            </tr>
+        }
+
+    </table>
+    

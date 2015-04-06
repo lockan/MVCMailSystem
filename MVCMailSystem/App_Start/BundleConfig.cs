@@ -9,7 +9,7 @@ namespace MVCMailSystem
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-1.11.2.js"));
+                        "~/Scripts/jquery-1.11.2.js", "~/Scripts/filter.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -29,7 +29,7 @@ namespace MVCMailSystem
 
             bundles.Add(new ScriptBundle("~/bundles/jstree").Include(
                         "~/Scripts/jquery-1.11.2.js",
-                        "~/Scripts/jstree.js"));   
+                        "~/Scripts/jstree.js"));  
         }
     }
 }

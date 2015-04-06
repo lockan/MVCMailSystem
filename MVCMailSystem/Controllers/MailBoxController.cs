@@ -30,7 +30,7 @@ namespace MVCMailSystem.Controllers
 
            
 
-            var viewModel = new MailBoxVM(); ;
+            var viewModel = new MailBoxVM();
             try
             {
                 //Maillist = db.mailDB.ToList();
@@ -159,6 +159,17 @@ namespace MVCMailSystem.Controllers
                 System.Diagnostics.EventLog.WriteEntry("MVCMailSystem", ex.Message);
             }
 
+        }
+
+        //For Mobile Demo
+        public ActionResult MobileTest()
+        {
+            string myid = this.Session["UserID"].ToString();
+            Guid myguid = new Guid(myid);
+            string sqlstatement = "SELECT * FROM Mails";
+            IEnumerable<InBox> testlist = db.Database.SqlQuery<InBox>(sqlstatement).ToList();
+             
+            return View(testlist);
         }
     }
 }

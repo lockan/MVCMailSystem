@@ -1,0 +1,27 @@
+﻿@model IEnumerable<MVCMailSystem.Models.InBox>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Bootstrap Test";
+}
+
+<h2>BootStrap Test</h2>
+
+<form class="input-group">
+    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+    <input type="text" class="form-control" placeholder="Search GUID">
+</form>
+
+<div class="list-group">
+    @foreach (var box in Model)
+    {
+        @Html.ActionLink(box.MailID.ToString(), "Details", new { box }, new { @class = "list-group-item", id = box.MailBoxID, mail = box.MailID})
+    }
+</div>
+
+
+
+
